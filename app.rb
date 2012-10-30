@@ -3,7 +3,7 @@ require 'sinatra'
 require 'awesome_print'
 require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
-require 'prowly'
+require 'yaml'
 
 enable :sessions
 
@@ -71,8 +71,27 @@ post '/' do
   caption_id = params[:caption_id]
   File.open('captions.txt', 'a+') { |f|
     f.puts "#{caption_id}, #{caption}"
+    prowl_message "Emoji captioned", "#{caption_id}: #{caption}"
   }
   
   redirect '/', :notice => "Duly noted!"
 end
 
+
+def prowl_message event, description
+  require 'prowl'
+  
+  prowl_config_file = File.join 'config', 'prowl.yml'
+  if File.exists? prowl_config_file
+    prowl_config = YAML.load File.open(prowl_config_file).read
+    if prowl_config["active"]
+      Prowl.add(
+        :apikey => prowl_config["api_key"],
+        :application => "Big Emoji",
+        :event => event,
+        :description => description
+      )
+    end
+  end
+  puts "Prowl notification sent '#{event}'"
+end
