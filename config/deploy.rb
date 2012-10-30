@@ -45,7 +45,7 @@ namespace :deploy do
   end
   
   task :link_shared_files, :roles => :app do
-    run "ln -s #{shared_path}/prowl.yml #{release_path}/prowl.yml"
+    run "ln -s #{shared_path}/config/prowl.yml #{release_path}/config/prowl.yml"
   end
   
 end

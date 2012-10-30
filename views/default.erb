@@ -41,11 +41,17 @@
   <form action="/" method="post">
 	<input type="hidden" name="caption_id" value="<%= @emoji_id %>" id="caption_id">
 	<div class="row">
-		<div class="eleven columns">
+		<div class="twelve columns">
+			<a href="/" class="button radius secondary">Refresh</a>
+		</div>
+	</div>
+	<br/><br/>
+	<div class="row">
+		<div class="ten columns">
 		    <input id="caption" type="text" name="caption" placeholder="Emojicomment!?"/>
 		</div>
 		<div class="one columns">
-			<input type="submit" class="button success radius" value="&#128169;"/>
+			<input type="submit" class="button success radius" value="Submit"/>
 		</div>
 	</div>
   </form>
